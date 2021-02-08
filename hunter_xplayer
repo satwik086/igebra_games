@@ -1,0 +1,52 @@
+cleari()
+drawStage(black)
+val player = Picture.rectangle(50, 50)
+player.setFillColor(green)
+player.setPenColor(green)
+
+val hunter1 = Picture.rectangle(50, 50)
+hunter1.setFillColor(red)
+hunter1.setPosition(250, 200)
+
+val hunter2 = Picture.rectangle(50, 50)
+hunter2.setFillColor(red)
+hunter2.setPosition(-250, -200)
+
+draw(player, hunter1, hunter2)
+var vel1 = Vector2D(2, 2)
+var vel2 = Vector2D(-2, 2)
+
+var speedplayer = 10
+animate {
+    hunter1.translate(vel1)
+    if (hunter1.collidesWith(stageBorder)) {
+    vel1 = bouncePicOffStage(hunter1, vel1)
+    }
+    
+    hunter2.translate(vel2)
+    if (hunter2.collidesWith(stageBorder)) {
+    vel2 = bouncePicOffStage(hunter2, vel2)
+    }
+    
+    if (isKeyPressed(Kc.VK_D)) {
+        player.translate(speedplayer, 0)
+    }
+    if (isKeyPressed(Kc.VK_A)) {
+        player.translate(-speedplayer, 0)
+    }
+    if (isKeyPressed(Kc.VK_W)) {
+        player.translate(0, speedplayer)
+    }
+    if (isKeyPressed(Kc.VK_S)) {
+        player.translate(0, -speedplayer)
+    }
+    if (player.collidesWith(hunter1)){
+      stopAnimation()
+    }
+      if (player.collidesWith(hunter2)){
+      stopAnimation()
+    }
+
+}
+showGameTime(10, "You Win", green, 25)
+activateCanvas()
